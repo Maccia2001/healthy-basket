@@ -282,6 +282,38 @@ async function loadSupabaseProducts() {
 
 loadSupabaseProducts();
 
+async function loadSupabasePrices() {
+  try {
+    const response = await fetch(
+      SUPABASE_URL +
+      "/rest/v1/price_observations?select=retailer_product_id,shelf_price_pence&source_name=eq.healthy_basket_demo",
+      {
+        headers: {
+          apikey: SUPABASE_KEY
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Could not load supermarket prices");
+    }
+
+    const prices = await response.json();
+
+    console.log(
+      "Supermarket prices loaded from Supabase:",
+      prices.length
+    );
+
+  } catch (error) {
+    console.error("Healthy Basket prices:", error.message);
+  }
+}
+
+loadSupabasePrices();
+
+  
+
   
 const money = p => '£' + (p / 100).toFixed(2);
 
