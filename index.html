@@ -312,6 +312,37 @@ async function loadSupabasePrices() {
 
 loadSupabasePrices();
 
+async function loadSupermarketMatches() {
+  try {
+    const response = await fetch(
+      SUPABASE_URL +
+      "/rest/v1/retailer_products?select=product_id,retailer_id,id&source_name=eq.healthy_basket_demo",
+      {
+        headers: {
+          apikey: SUPABASE_KEY
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Could not load supermarket matches");
+    }
+
+    const matches = await response.json();
+
+    console.log(
+      "Supermarket matches loaded from Supabase:",
+      matches.length
+    );
+
+  } catch (error) {
+    console.error("Healthy Basket matches:", error.message);
+  }
+}
+
+loadSupermarketMatches();
+
+  
   
 
   
