@@ -371,6 +371,54 @@ async function loadSupermarketNames() {
 
 loadSupermarketNames();
 
+async function combineSupabaseData() {
+  try {
+    const tables = [
+      "products?select=id,canonical_name,pack_quantity,pack_unit&brand=eq.Healthy%20Basket%20Demo",
+      "retailers?select=id,name",
+      "retailer_products?select=id,product_id,retailer_id&source_name=eq.healthy_basket_demo",
+      "price_observations?select=retailer_product_id,shelf_price_pence&source_name=eq.healthy_basket_demo"
+    ];
+
+    const results = await Promise.all(
+      tables.map(async (table) => {
+        const response = await fetch(
+          SUPABASE_URL + "/rest/v1/" + table,
+          { headers: { apikey: SUPABASE_KEY } }
+        );
+
+        if (!response.ok) {
+          throw new Error("Could not load " + table);
+        }
+
+        return response.json();
+      })
+    );
+
+    const [dbProducts, dbRetailers, dbMatches, dbPrices] = results;
+
+    const combined = dbMatches.map(match => {
+      const product = dbProducts.find(p => p.id === match.product_id);
+      const retailer = dbRetailers.find(r => r.id === match.retailer_id);
+      const price = dbPrices.find(p => p.retailer_product_id === match.id);
+
+      return {
+        product: product?.canonical_name,
+        supermarket: retailer?.name,
+        pricePence: price?.shelf_price_pence
+      };
+    });
+
+    console.log("Combined supermarket listings:", combined.length);
+    console.table(combined);
+
+  } catch (error) {
+    console.error("Healthy Basket combined data:", error.message);
+  }
+}
+
+combineSupabaseData();
+
   
   
 
