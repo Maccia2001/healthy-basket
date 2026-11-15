@@ -414,6 +414,20 @@ async function combineSupabaseData() {
     const formattedProducts = dbProducts.map(product =>
   formatSupabaseProduct(product, combined)
 );
+if (
+  formattedProducts.length === 10 &&
+  formattedProducts.every(product =>
+    product.prices.length === 4 &&
+    product.prices.every(price =>
+      Number.isFinite(price) && price >= 0
+    )
+  )
+) {
+  products = formattedProducts;
+  renderProducts();
+  renderBasket();
+  console.log("Healthy Basket now displaying Supabase products");
+}    
 console.table(formattedProducts);
 
   } catch (error) {
