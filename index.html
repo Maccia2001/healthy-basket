@@ -411,6 +411,10 @@ async function combineSupabaseData() {
 
     console.log("Combined supermarket listings:", combined.length);
     console.table(combined);
+    const formattedProducts = dbProducts.map(product =>
+  formatSupabaseProduct(product, combined)
+);
+console.table(formattedProducts);
 
   } catch (error) {
     console.error("Healthy Basket combined data:", error.message);
