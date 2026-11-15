@@ -254,7 +254,34 @@ async function testSupabaseConnection() {
   );
 }
 
-testSupabaseConnection();  
+testSupabaseConnection();
+
+async function loadSupabaseProducts() {
+  try {
+    const response = await fetch(
+      SUPABASE_URL + "/rest/v1/products?select=id,canonical_name,pack_quantity,pack_unit&brand=eq.Healthy%20Basket%20Demo",
+      {
+        headers: {
+          apikey: SUPABASE_KEY
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Could not load products");
+    }
+
+    const data = await response.json();
+    console.log("Products loaded from Supabase:", data.length);
+
+  } catch (error) {
+    console.error("Healthy Basket:", error.message);
+  }
+}
+
+loadSupabaseProducts();
+
+  
 const money = p => '£' + (p / 100).toFixed(2);
 
 function renderProducts() {
