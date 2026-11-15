@@ -1,20 +1,349 @@
-🥬 HealthyBasket
-Smarter healthy shopping
-My basket (0)
-SHOP SMARTER • EAT BETTER
-Eat well. Spend less.
-Explore everyday foods, compare four UK supermarkets and see which shop offers the lowest total for your basket.
-DEMONSTRATION ONLY — fictional prices
-🥑 🥕
-🛒 🍎
-Find your food
-Search our first 10 demonstration products.
 
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Healthy Basket | Eat well. Spend less.</title>
+<style>
+:root {
+  --green:#176b4a;
+  --deep:#103f31;
+  --mint:#eaf7ef;
+  --cream:#fafbf7;
+  --ink:#182c24;
+  --muted:#63746b;
+  --line:#dce7df;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  background:var(--cream);
+  color:var(--ink);
+  font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;
+}
+button,input {font:inherit}
+button {cursor:pointer}
+header {background:#fff;border-bottom:1px solid var(--line)}
+.wrap {max-width:1140px;margin:auto;padding:0 22px}
+.nav {
+  display:flex;align-items:center;
+  justify-content:space-between;gap:16px;padding:17px 0;
+}
+.logo {
+  font-size:24px;font-weight:850;color:var(--deep);
+  letter-spacing:-.8px;
+}
+.logo span {color:#63b36f}
+.nav small {color:var(--muted)}
+.basket-btn {
+  border:0;border-radius:12px;background:var(--green);
+  color:white;padding:12px 18px;font-weight:750;
+}
+.basket-btn:hover {background:var(--deep)}
+.hero {
+  padding:56px 0 46px;
+  background:linear-gradient(110deg,#e6f6e9,#f7fae7);
+}
+.hero-grid {
+  display:grid;grid-template-columns:1.4fr .6fr;
+  gap:30px;align-items:center;
+}
+.eyebrow {
+  font-size:13px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--green);font-weight:800;
+}
+h1 {
+  font-size:clamp(36px,5vw,60px);
+  line-height:1.06;letter-spacing:-2px;
+  margin:10px 0 16px;color:var(--deep);
+}
+h1 em {font-style:normal;color:var(--green)}
+.hero p {font-size:18px;max-width:570px;color:#496254}
+.hero-art {
+  border-radius:28px;background:white;padding:35px;
+  text-align:center;box-shadow:0 16px 40px #15553715;
+  font-size:92px;
+}
+.demo {
+  display:inline-block;background:#fff5d7;color:#75520b;
+  border:1px solid #f1d58d;padding:7px 12px;
+  border-radius:50px;font-weight:750;font-size:12px;
+  margin-top:12px;
+}
+.section {padding:40px 0}
+.section h2 {font-size:28px;letter-spacing:-.8px;margin:0 0 6px}
+.sub {color:var(--muted);margin:0 0 24px}
+.tools {display:flex;gap:12px;margin:20px 0 22px}
+.tools input {
+  width:100%;border:1px solid #b9d1c2;border-radius:12px;
+  padding:14px 16px;background:white;outline-color:var(--green);
+}
+.grid {
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:17px;
+}
+.product {
+  background:#fff;border:1px solid var(--line);
+  border-radius:18px;padding:20px;
+  box-shadow:0 4px 18px #173c2508;
+}
+.emoji {
+  font-size:37px;background:var(--mint);border-radius:14px;
+  width:65px;height:65px;display:grid;place-items:center;
+}
+.product h3 {font-size:18px;margin:14px 0 2px}
+.size {font-size:13px;color:var(--muted)}
+.price {
+  font-size:25px;font-weight:850;color:var(--deep);
+  margin:12px 0 0;
+}
+.winner {
+  color:var(--green);font-size:13px;
+  font-weight:700;margin:0 0 15px;
+}
+.product button {
+  width:100%;border:1px solid var(--green);
+  background:#fff;color:var(--green);
+  border-radius:10px;padding:10px;font-weight:750;
+}
+.product button:hover {background:var(--mint)}
+.layout {
+  display:grid;grid-template-columns:minmax(0,1fr) 330px;
+  gap:26px;align-items:start;
+}
+.panel {
+  position:sticky;top:18px;background:white;
+  border:1px solid var(--line);border-radius:18px;padding:22px;
+}
+.panel h2 {font-size:23px;margin:0 0 10px}
+.empty {color:var(--muted);padding:25px 0}
+.basket-line {
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--line);gap:12px;padding:12px 0;
+}
+.basket-line small {display:block;color:var(--muted)}
+.qty {display:flex;align-items:center;gap:8px}
+.qty button {
+  border:1px solid var(--line);background:#f6faf7;
+  border-radius:8px;width:29px;height:29px;
+}
+.comparison {
+  background:var(--mint);border-radius:12px;
+  padding:15px;margin-top:20px;
+}
+.comparison p {
+  display:flex;justify-content:space-between;margin:8px 0;
+}
+.comparison .best {font-weight:800;color:var(--deep)}
+.notice {font-size:12px;color:var(--muted);margin-top:14px}
+.status {margin-top:8px;font-size:13px;color:var(--muted)}
+footer {
+  border-top:1px solid var(--line);padding:25px 0;
+  color:var(--muted);font-size:13px;
+}
+@media(max-width:920px) {
+  .layout {grid-template-columns:1fr}
+  .panel {position:static}
+  .grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:620px) {
+  .hero-grid {grid-template-columns:1fr}
+  .hero-art {display:none}
+  .grid {grid-template-columns:1fr}
+  .nav small {display:none}
+  .hero {padding:42px 0}
+  .section {padding:30px 0}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <div class="logo">🥬 Healthy<span>Basket</span></div>
+    <small>Smarter healthy shopping</small>
+    <button class="basket-btn" onclick="document.getElementById('my-basket').scrollIntoView({behavior:'smooth'})">
+      My basket <span id="basket-count">(0)</span>
+    </button>
+  </div>
+</header>
 
-🛒 My basket
-Add products to compare full basket totals.
-Your basket is empty. Add a product to begin.
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Shop smarter • Eat better</div>
+      <h1>Eat well.<br><em>Spend less.</em></h1>
+      <p>Explore everyday foods, compare four UK supermarkets and see which shop offers the lowest total for your basket.</p>
+      <span class="demo">DEMONSTRATION ONLY — fictional prices</span>
+    </div>
+    <div class="hero-art" aria-hidden="true">🥑 🥕<br>🛒 🍎</div>
+  </div>
+</section>
 
-Prices are fictional test data, in GBP. No delivery charges, loyalty discounts, stock checks or real-time prices are included. This prototype is not connected to Supabase.
-© Healthy Basket · Independent prototype · No retailer endorsement implied.
+<main class="wrap section">
+  <div class="layout">
+    <section>
+      <h2>Find your food</h2>
+      <p class="sub">Search our first 10 demonstration products.</p>
+      <div class="tools">
+        <input id="search" type="search"
+          placeholder="Try bananas, chicken, oats…"
+          aria-label="Search products">
+      </div>
+      <div id="products" class="grid"></div>
+      <p id="search-status" class="status" aria-live="polite"></p>
+    </section>
 
+    <aside id="my-basket" class="panel">
+      <h2>🛒 My basket</h2>
+      <p class="sub">Add products to compare full basket totals.</p>
+      <div id="basket-items" class="empty">
+        Your basket is empty. Add a product to begin.
+      </div>
+      <div id="basket-totals"></div>
+      <p class="notice">
+        Prices are fictional test data, in GBP. No delivery charges,
+        loyalty discounts, stock checks or real-time prices are included.
+        This prototype is not connected to Supabase.
+      </p>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    © Healthy Basket · Independent prototype · No retailer endorsement implied.
+  </div>
+</footer>
+
+<script>
+'use strict';
+
+const retailers = ['Asda','Tesco',"Sainsbury's",'Waitrose'];
+
+const products = [
+  {id:'bananas',name:'Bananas',size:'1 kg',emoji:'🍌',prices:[105,110,115,125]},
+  {id:'apples',name:'Apples',size:'6 pack',emoji:'🍎',prices:[150,155,165,185]},
+  {id:'broccoli',name:'Broccoli',size:'1 each',emoji:'🥦',prices:[80,85,90,100]},
+  {id:'carrots',name:'Carrots',size:'1 kg',emoji:'🥕',prices:[60,65,70,80]},
+  {id:'chicken',name:'Chicken breast fillets',size:'500 g',emoji:'🍗',prices:[385,395,420,450]},
+  {id:'eggs',name:'Eggs',size:'6 pack',emoji:'🥚',prices:[150,155,165,180]},
+  {id:'oats',name:'Porridge oats',size:'1 kg',emoji:'🥣',prices:[120,125,135,150]},
+  {id:'yoghurt',name:'Fat-free natural yoghurt',size:'500 g',emoji:'🥛',prices:[105,110,115,130]},
+  {id:'rice',name:'Basmati rice',size:'1 kg',emoji:'🍚',prices:[170,175,185,200]},
+  {id:'peas',name:'Frozen garden peas',size:'900 g',emoji:'🫛',prices:[140,145,155,170]}
+];
+
+const basket = {};
+const money = p => '£' + (p / 100).toFixed(2);
+
+function renderProducts() {
+  const term = document.getElementById('search').value.toLowerCase().trim();
+  const found = products.filter(p => p.name.toLowerCase().includes(term));
+
+  document.getElementById('products').innerHTML = found.map(p => `
+    <article class="product">
+      <div class="emoji" aria-hidden="true">${p.emoji}</div>
+      <h3>${p.name}</h3>
+      <div class="size">${p.size}</div>
+      <div class="price">${money(Math.min(...p.prices))}</div>
+      <p class="winner">
+        Lowest demo price · ${retailers[p.prices.indexOf(Math.min(...p.prices))]}
+      </p>
+      <button data-add="${p.id}">+ Add to basket</button>
+    </article>
+  `).join('');
+
+  document.getElementById('search-status').textContent = found.length
+    ? `${found.length} demonstration product${found.length === 1 ? '' : 's'} shown`
+    : 'No matching products. Try a different search.';
+}
+
+function renderBasket() {
+  const entries = Object.entries(basket).filter(([,qty]) => qty > 0);
+  const count = entries.reduce((sum,[,qty]) => sum + qty, 0);
+
+  document.getElementById('basket-count').textContent = `(${count})`;
+
+  const list = document.getElementById('basket-items');
+  const totals = document.getElementById('basket-totals');
+
+  if (!entries.length) {
+    list.className = 'empty';
+    list.textContent = 'Your basket is empty. Add a product to begin.';
+    totals.innerHTML = '';
+    return;
+  }
+
+  list.className = '';
+  list.innerHTML = entries.map(([id,qty]) => {
+    const p = products.find(x => x.id === id);
+    return `
+      <div class="basket-line">
+        <div>
+          <strong>${p.name}</strong>
+          <small>${p.size}</small>
+        </div>
+        <div class="qty">
+          <button data-id="${id}" data-change="-1" aria-label="Remove one ${p.name}">−</button>
+          <strong>${qty}</strong>
+          <button data-id="${id}" data-change="1" aria-label="Add one ${p.name}">+</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const sums = retailers.map((_,i) =>
+    entries.reduce((sum,[id,qty]) =>
+      sum + products.find(p => p.id === id).prices[i] * qty, 0)
+  );
+
+  const lowest = Math.min(...sums);
+  const highest = Math.max(...sums);
+
+  totals.innerHTML = `
+    <div class="comparison">
+      <strong>Whole-basket comparison</strong>
+      ${retailers.map((name,i) => `
+        <p class="${sums[i] === lowest ? 'best' : ''}">
+          <span>${name}${sums[i] === lowest ? ' ★' : ''}</span>
+          <span>${money(sums[i])}</span>
+        </p>
+      `).join('')}
+      <hr style="border:0;border-top:1px solid #c7e3cf">
+      <p class="best">
+        <span>Lowest one-store total</span>
+        <span>${money(lowest)}</span>
+      </p>
+      <p>
+        <span>Difference from highest</span>
+        <strong>${money(highest - lowest)}</strong>
+      </p>
+    </div>
+  `;
+}
+
+document.getElementById('search').addEventListener('input',renderProducts);
+
+document.getElementById('products').addEventListener('click',e => {
+  const b = e.target.closest('button[data-add]');
+  if (!b) return;
+  basket[b.dataset.add] = (basket[b.dataset.add] || 0) + 1;
+  renderBasket();
+});
+
+document.getElementById('basket-items').addEventListener('click',e => {
+  const b = e.target.closest('button[data-change]');
+  if (!b) return;
+  basket[b.dataset.id] = Math.max(
+    0,
+    (basket[b.dataset.id] || 0) + Number(b.dataset.change)
+  );
+  renderBasket();
+});
+
+renderProducts();
+renderBasket();
+</script>
+</body>
+</html>
