@@ -238,6 +238,23 @@ const basket = {};
 // Supabase database connection will go here
 const SUPABASE_URL = "https://fcpdnavfivqulpnqxkkn.supabase.co";
 const SUPABASE_KEY = "sb_publishable_GyK4gjqwbsSGgT57B5rG0Q_4bHHZmEY";
+async function testSupabaseConnection() {
+  const response = await fetch(
+    SUPABASE_URL + "/rest/v1/products?select=canonical_name&limit=1",
+    {
+      headers: {
+        apikey: SUPABASE_KEY
+      }
+    }
+  );
+
+  console.log(
+    "Healthy Basket database connection:",
+    response.ok ? "Successful" : "Failed"
+  );
+}
+
+testSupabaseConnection();  
 const money = p => '£' + (p / 100).toFixed(2);
 
 function renderProducts() {
