@@ -479,7 +479,7 @@ function renderProducts() {
 
   document.getElementById('products').innerHTML = found.map(p => `
     <article class="product">
-      <div class="emoji" aria-hidden="true">${p.name === "Bananas" ? "🍌" : p.emoji}</div>
+      <div class="emoji" aria-hidden="true">${p.name === "Bananas" ? '<img src="images/bananas.png" style="width:120px;height:90px;object-fit:contain;" alt="Bananas">' : p.emoji}</div>
       <h3>${p.name}</h3>
       <div class="size">${p.size}</div>
       <div class="price">${money(Math.min(...p.prices))}</div>
